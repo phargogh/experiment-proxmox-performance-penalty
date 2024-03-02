@@ -12,7 +12,6 @@ done;
 FILEIO_DIR="fileio-results"
 mkdir $FILEIO_DIR || echo "$FILEIO_DIR/ already exists"
 pushd $FILEIO_DIR
-sysbench fileio prepare
 options=(
     "seqwr"
     "seqrewr"
@@ -25,10 +24,11 @@ for option in "${options[@]}"
 do
     for i in {0..5}
     do
+        sysbench fileio prepare
         sysbench fileio run --file-test-mode=$option > "fileio-$option-$i.txt"
+        sysbench fileio cleanup
     done
 done
-sysbench fileio cleanup
 popd
 
 # run an InVEST model - scenic quality
