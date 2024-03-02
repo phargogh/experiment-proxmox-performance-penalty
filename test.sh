@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# execute this script as root
 
 set -ex
 
@@ -36,6 +38,6 @@ wget https://storage.googleapis.com/releases.naturalcapitalproject.org/invest/3.
 unzip ScenicQuality.zip
 for i in {0..5}
 do
-    sudo docker run --rm -ti -v $(pwd):/natcap -w /natcap ghcr.io/natcap/devstack:latest python3 /natcap/test-sq.py /natcap/InVEST-sq-results/sq-workspace-$i
+    docker run --rm -ti -v $(pwd):/natcap -w /natcap -u root ghcr.io/natcap/devstack:latest python3 /natcap/test-sq.py /natcap/InVEST-sq-results/sq-workspace-$i
 done
 
